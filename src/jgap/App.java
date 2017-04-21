@@ -12,7 +12,7 @@ import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
-
+import jgap.Formulas;
 public class App {
 
 	private static final int LARGO=36;
@@ -25,7 +25,10 @@ public class App {
 	  	
 	    Configuration conf = new DefaultConfiguration();
 	    conf.setPreservFittestIndividual(true);
-	    FitnessFunction myFunc =new FitnessRosenbockValley(LARGO);
+            
+            
+	    FitnessFunction myFunc =new Formulas(LARGO);
+            
 	    conf.setFitnessFunction(myFunc);
 	    Gene[] sampleGenes = new Gene[LARGO*2];
 	    for (int i = 0; i < LARGO*2; i++) {
@@ -38,24 +41,23 @@ public class App {
 	    population = Genotype.randomInitialGenotype(conf);
 	        
 	    for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
-	      population.evolve();
+	    population.evolve();
 
 	      //Descomentar si se quiere toda la salida....
 //	      IChromosome bestSolutionSoFar = population.getFittestChromosome();
-//		  double x=((FitnessRosenbockValley)myFunc).extractXFromChromosome(bestSolutionSoFar);
-//		  double y=((FitnessRosenbockValley)myFunc).extractYFromChromosome(bestSolutionSoFar);
+//		  double x=((Formulas)myFunc).extractXFromChromosome(bestSolutionSoFar);
+//		  double y=((Formulas)myFunc).extractYFromChromosome(bestSolutionSoFar);
 //	      System.out.println("Generación " + (i+1) + " \t- Mejor individuo con fitnes " + bestSolutionSoFar.getFitnessValue() + "\tx="+x+"\ty="+y);
 	    }
 
 	    System.out.println("Solución encontrada en " + (double)(System.currentTimeMillis()-tim)/(double)1000 + " segundos.");
 
 	    IChromosome bestSolutionSoFar = population.getFittestChromosome();
-	    System.out.println("La mejor solución tiene un fitness de " +
-	                       bestSolutionSoFar.getFitnessValue());
+	    System.out.println("La mejor solución tiene un fitness de " + bestSolutionSoFar.getFitnessValue());
 	    System.out.println("El individuo resultó ser: ");
 
-	    double x=((FitnessRosenbockValley)myFunc).extractXFromChromosome(bestSolutionSoFar);
-	    double y=((FitnessRosenbockValley)myFunc).extractYFromChromosome(bestSolutionSoFar);
+	    double x=((Formulas)myFunc).extractXFromChromosome(bestSolutionSoFar);
+	    double y=((Formulas)myFunc).extractYFromChromosome(bestSolutionSoFar);
         System.out.println("x="+x);
         System.out.println("y="+y);
   }
